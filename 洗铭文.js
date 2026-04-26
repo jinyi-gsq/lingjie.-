@@ -9,8 +9,8 @@
 // @grant GM_addStyle
 // @grant unsafeWindow
 // @run-at document-idle
-// @downloadURL https://gh-proxy.org/https://raw.githubusercontent.com/smartbear147/ling-monitor/refs/heads/main/ling-inscription.user.js
-// @updateURL https://gh-proxy.org/https://raw.githubusercontent.com/smartbear147/ling-monitor/refs/heads/main/ling-inscription.user.js
+// @downloadUR https://gh-proxy.org/https://github.com/jinyi-gsq/lingjie.-/blob/main/%E6%B4%97%E9%93%AD%E6%96%87.js
+// @updateURL https://gh-proxy.org/https://github.com/jinyi-gsq/lingjie.-/blob/main/%E6%B4%97%E9%93%AD%E6%96%87.js
 // ==/UserScript==
 
 (function () {
