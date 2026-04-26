@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name 灵界灵纹自动洗练
 // @namespace https://ling.muge.info
-// @version 1.3
-// @description 自动十连灵纹，支持目标属性筛选、品质过滤，自动放弃不符合结果，面板始终置顶，手机端紧凑模式，支持拖拽
+// @version 1.4
+// @description 自动十连灵纹，按属性和数值筛选，自动放弃不符合结果，面板始终置顶，手机端紧凑模式，支持拖拽
 // @match https://ling.muge.info/*
 // @grant GM_getValue
 // @grant GM_setValue
@@ -64,60 +64,60 @@
         html.theme-dark #inscription-panel,
         html:not(.theme-light) #inscription-panel {
             --ip-bg: #0e1528;
-            --ip-bg-section: rgba(180,130,60,0.03);
+            --ip-bg-section: rgba(100,160,220,0.03);
             --ip-bg-card: rgba(0,0,0,0.25);
             --ip-bg-input: rgba(0,0,0,0.4);
             
             --ip-text: #f0ece4;
-            --ip-text-secondary: #c0a070;
-            --ip-text-muted: #9a8a60;
+            --ip-text-secondary: #8ab8d0;
+            --ip-text-muted: #7a9ab0;
             --ip-text-bright: #f5f2eb;
             
-            --ip-accent: #d4a84b;
-            --ip-accent-dim: rgba(212,168,75,0.25);
-            --ip-accent-glow: rgba(212,168,75,0.15);
-            --ip-accent-subtle: rgba(212,168,75,0.05);
+            --ip-accent: #4a9ec8;
+            --ip-accent-dim: rgba(74,158,200,0.25);
+            --ip-accent-glow: rgba(74,158,200,0.15);
+            --ip-accent-subtle: rgba(74,158,200,0.05);
             --ip-gold: #ffb450;
             --ip-blue: #4fc3f7;
-            --ip-green: #4ecdc4;
+            --ip-jade: #4ecdc4;
             --ip-red: #ff6b6b;
             --ip-red-glow: rgba(255,107,107,0.2);
             
-            --ip-border: rgba(180,130,60,0.08);
-            --ip-border-subtle: rgba(180,130,60,0.15);
-            --ip-border-strong: rgba(180,130,60,0.25);
+            --ip-border: rgba(100,160,200,0.08);
+            --ip-border-subtle: rgba(100,160,200,0.15);
+            --ip-border-strong: rgba(100,160,200,0.25);
             
-            --ip-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(212,168,75,0.08);
-            --ip-shadow-inner: inset 0 1px 0 rgba(180,130,60,0.1);
+            --ip-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(74,158,200,0.08);
+            --ip-shadow-inner: inset 0 1px 0 rgba(100,160,200,0.1);
             
-            --ip-header-grad: linear-gradient(180deg, rgba(212,168,75,0.08) 0%, transparent 100%);
-            --ip-line: linear-gradient(90deg, transparent 0%, rgba(212,168,75,0.5) 20%, rgba(212,168,75,0.8) 50%, rgba(212,168,75,0.5) 80%, transparent 100%);
-            --ip-bg-texture: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(180,130,60,0.02) 2px, rgba(180,130,60,0.02) 4px);
+            --ip-header-grad: linear-gradient(180deg, rgba(74,158,200,0.08) 0%, transparent 100%);
+            --ip-line: linear-gradient(90deg, transparent 0%, rgba(74,158,200,0.5) 20%, rgba(74,158,200,0.8) 50%, rgba(74,158,200,0.5) 80%, transparent 100%);
+            --ip-bg-texture: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(100,160,200,0.02) 2px, rgba(100,160,200,0.02) 4px);
             
             --ip-log-success: #4ecdc4;
             --ip-log-error: #ff6b6b;
             --ip-log-warn: #f0a050;
             --ip-log-info: #70a0c0;
-            --ip-log-action: #d4a84b;
+            --ip-log-action: #4a9ec8;
         }
         html.theme-light #inscription-panel {
             --ip-bg: #f5f3ef;
-            --ip-bg-section: #f0ece8;
+            --ip-bg-section: #eef4f8;
             --ip-bg-card: rgba(90,122,138,0.05);
-            --ip-bg-input: #eae6e2;
+            --ip-bg-input: #eaeef2;
             
             --ip-text: #2a3a4a;
-            --ip-text-secondary: #5a4a3a;
-            --ip-text-muted: #6a5a4a;
+            --ip-text-secondary: #4a6a8a;
+            --ip-text-muted: #506880;
             --ip-text-bright: #1a2a3a;
             
-            --ip-accent: #b8860b;
-            --ip-accent-dim: rgba(184,134,11,0.2);
-            --ip-accent-glow: rgba(184,134,11,0.1);
-            --ip-accent-subtle: rgba(184,134,11,0.05);
+            --ip-accent: #2a7ab8;
+            --ip-accent-dim: rgba(42,122,184,0.2);
+            --ip-accent-glow: rgba(42,122,184,0.1);
+            --ip-accent-subtle: rgba(42,122,184,0.05);
             --ip-gold: #d4942a;
             --ip-blue: #2a8ab8;
-            --ip-green: #3a8a80;
+            --ip-jade: #3a8a80;
             --ip-red: #c84040;
             --ip-red-glow: rgba(200,64,64,0.15);
             
@@ -128,15 +128,15 @@
             --ip-shadow: 0 4px 16px rgba(0,0,0,0.08);
             --ip-shadow-inner: inset 0 1px 0 rgba(255,255,255,0.5);
             
-            --ip-header-grad: linear-gradient(180deg, #f8f6f2 0%, #f5f3ef 100%);
-            --ip-line: linear-gradient(90deg, transparent 0%, rgba(184,134,11,0.3) 30%, rgba(184,134,11,0.5) 50%, rgba(184,134,11,0.3) 70%, transparent 100%);
+            --ip-header-grad: linear-gradient(180deg, #f0f4f8 0%, #f5f3ef 100%);
+            --ip-line: linear-gradient(90deg, transparent 0%, rgba(42,122,184,0.3) 30%, rgba(42,122,184,0.5) 50%, rgba(42,122,184,0.3) 70%, transparent 100%);
             --ip-bg-texture: none;
             
             --ip-log-success: #3a8a50;
             --ip-log-error: #c84040;
             --ip-log-warn: #b08030;
             --ip-log-info: #3a6a80;
-            --ip-log-action: #b8860b;
+            --ip-log-action: #2a7ab8;
         }
 
         /* === 面板整体 === */
@@ -171,7 +171,7 @@
         #inscription-panel.minimized #inscription-body { display: none; }
         #inscription-panel.minimized { 
             width: auto; 
-            min-width: ${isMobile ? '160px' : '180px'}; 
+            min-width: ${isMobile ? '150px' : '180px'}; 
         }
 
         /* === 头部 === */
@@ -211,7 +211,7 @@
         }
         #inscription-status.status-running {
             background: rgba(78,205,196,0.15);
-            color: var(--ip-green);
+            color: var(--ip-jade);
             border: 1px solid rgba(78,205,196,0.3);
             animation: ip-pulse-glow 2s ease-in-out infinite;
         }
@@ -370,7 +370,7 @@
             letter-spacing: ${isMobile ? '0' : 'normal'};
         }
         .ip-btn-start {
-            background: linear-gradient(135deg, var(--ip-accent) 0%, #b8860b 100%);
+            background: linear-gradient(135deg, var(--ip-accent) 0%, #2a7ab8 100%);
             color: #fff;
             box-shadow: 0 2px 8px var(--ip-accent-dim), var(--ip-shadow-inner);
         }
@@ -529,7 +529,7 @@
             pointer-events: auto !important;
         }
         .ic-btn-save {
-            background: linear-gradient(135deg, var(--ip-accent) 0%, #b8860b 100%);
+            background: linear-gradient(135deg, var(--ip-accent) 0%, #2a7ab8 100%);
             color: #fff;
             border: none;
             box-shadow: 0 2px 8px var(--ip-accent-dim);
@@ -544,12 +544,6 @@
             background: var(--ip-accent-subtle);
             color: var(--ip-accent);
         }
-
-        /* === 品质颜色标识 === */
-        .quality-gold { color: var(--ip-gold); font-weight: bold; }
-        .quality-blue { color: var(--ip-blue); }
-        .quality-green { color: var(--ip-green); }
-        .quality-gray { color: var(--ip-text-muted); }
 
         /* === 目标属性列表 === */
         .affix-list { display: flex; flex-direction: column; gap: 3px; }
@@ -626,7 +620,7 @@
         }
         .affix-add:hover { border-color: var(--ip-accent); background: var(--ip-accent-subtle); }
 
-        /* === 手机端面板透明度调节 === */
+        /* === 手机端面板透明度 === */
         html.theme-dark #inscription-panel.mobile-compact {
             background: rgba(14, 21, 40, 0.92);
             backdrop-filter: blur(8px);
@@ -641,31 +635,29 @@
 
     // --- 默认配置 ---
     const DEFAULT_CONFIG = {
-        minQuality: '宝纹',
+        // 目标属性（按优先级排序），仅按属性名和数值判断
         targetStats: [
             { stat: '攻击', minValue: 50 },
             { stat: '防御', minValue: 50 },
             { stat: '气血', minValue: 100 },
             { stat: '神识', minValue: 20 }
         ],
+        // 停止模式: 'any' = 任一满足即停, 'all' = 全部满足才停, 'manual' = 永不停
         stopMode: 'any',
+        // 最大十连次数（0=无限制）
         maxAttempts: 0,
+        // 结果动画等待(ms)
         resultAnimationMs: 1500,
+        // 放弃后等待(ms)
         discardDelayMs: 2000,
+        // 自动关闭弹窗
         autoCloseDialogs: true,
+        // 达到目标后浏览器通知
         notifyOnComplete: true,
         // 面板位置
         panelPosition: isMobile ? { top: 60, left: 10 } : { top: 10, left: 10 },
         // 是否迷你模式（手机端默认最小化）
         minimized: isMobile,
-    };
-
-    const QUALITY_ORDER = ['神纹', '宝纹', '灵纹', '凡纹'];
-    const QUALITY_COLORS = {
-        '神纹': 'quality-gold',
-        '宝纹': 'quality-blue',
-        '灵纹': 'quality-green',
-        '凡纹': 'quality-gray'
     };
 
     function loadConfig() {
@@ -674,6 +666,8 @@
         if (saved) {
             try {
                 const parsed = typeof saved === 'string' ? JSON.parse(saved) : saved;
+                // 移除旧版本可能存在的 minQuality 字段
+                delete parsed.minQuality;
                 return { ...defaults, ...parsed };
             } catch (e) {}
         }
@@ -747,37 +741,33 @@
             const statEl = card.querySelector('.insc-result-card__stat');
             const valueEl = card.querySelector('.insc-result-card__value');
 
-            if (!qualityEl || !statEl || !valueEl) return;
+            if (!statEl || !valueEl) return;
 
-            const quality = qualityEl.textContent.trim();
+            const quality = qualityEl ? qualityEl.textContent.trim() : '';
             const stat = statEl.textContent.trim();
             const valueText = valueEl.textContent.trim();
             const value = parseInt(valueText.replace(/[+]/g, '')) || 0;
 
-            let qualityLevel = QUALITY_ORDER.indexOf(quality);
-            if (qualityLevel === -1) qualityLevel = 99;
-
             results.push({
                 quality,
-                qualityLevel,
                 stat,
                 value,
                 element: card,
-                rawText: `${quality} ${stat} +${value}`
+                rawText: `${quality ? quality + ' ' : ''}${stat} +${value}`
             });
         });
 
         return results;
     }
 
+    // --- 检查是否满足目标（仅按属性和数值） ---
     function checkTargetMet(results) {
-        const minQualityIndex = config.minQuality === '全部' ? 99 : QUALITY_ORDER.indexOf(config.minQuality);
-        const qualifiedResults = results.filter(r => r.qualityLevel <= minQualityIndex);
-
-        if (qualifiedResults.length === 0) return { met: false, matches: [], reason: '无达标品质' };
+        if (config.targetStats.length === 0) {
+            return { met: true, matches: [], reason: '无目标' };
+        }
 
         const matches = [];
-        for (const result of qualifiedResults) {
+        for (const result of results) {
             for (const target of config.targetStats) {
                 if (result.stat.includes(target.stat)) {
                     if (!target.minValue || result.value >= target.minValue) {
@@ -788,11 +778,13 @@
                             value: result.value,
                             required: target.minValue || 0
                         });
+                        break; // 一个词条只匹配一个规则
                     }
                 }
             }
         }
 
+        // 去重
         const uniqueMatches = [];
         const seenCards = new Set();
         for (const match of matches) {
@@ -811,17 +803,17 @@
             met = [...requiredStats].every(s => matchedStats.has(s));
         }
 
-        return { met, matches: uniqueMatches, reason: met ? '目标达成' : (uniqueMatches.length > 0 ? '部分匹配' : '无匹配属性') };
+        const reason = met ? '目标达成' : (uniqueMatches.length > 0 ? `部分匹配(${uniqueMatches.length})` : '无匹配');
+
+        return { met, matches: uniqueMatches, reason };
     }
 
     function getBestResult(results) {
-        const minQualityIndex = config.minQuality === '全部' ? 99 : QUALITY_ORDER.indexOf(config.minQuality);
         let best = null;
         let bestScore = -1;
 
         for (const r of results) {
-            if (r.qualityLevel > minQualityIndex) continue;
-            let score = (10 - r.qualityLevel) * 1000;
+            let score = 0;
             for (const target of config.targetStats) {
                 if (r.stat.includes(target.stat)) {
                     score += r.value * 10;
@@ -835,6 +827,7 @@
         return best;
     }
 
+    // --- 点击十连灵纹 ---
     function clickTenPull() {
         const buttons = document.querySelectorAll('.modal-action-btn__text');
         for (const btn of buttons) {
@@ -847,6 +840,7 @@
         return false;
     }
 
+    // --- 点击全部放弃 ---
     function clickDiscardAll() {
         const buttons = document.querySelectorAll('button.modal-btn--outline');
         for (const btn of buttons) {
@@ -867,6 +861,7 @@
         return false;
     }
 
+    // --- 处理二次确认弹窗 ---
     async function handleDiscardConfirmDialog(timeout = 3000) {
         const start = Date.now();
         while (Date.now() - start < timeout) {
@@ -875,7 +870,7 @@
             if (confirmBtnById && cancelBtnById) {
                 const cText = confirmBtnById.textContent.trim();
                 if (cText === '确 定' || cText === '确定') {
-                    log('检测到确认弹窗，点击「确定」确认放弃', 'action');
+                    log('确认弹窗，点击「确定」', 'action');
                     confirmBtnById.click();
                     return true;
                 }
@@ -889,7 +884,7 @@
                 const confirmText = confirmBtn ? confirmBtn.textContent.trim() : '';
                 if ((cancelText === '取 消' || cancelText === '取消') && 
                     (confirmText === '确 定' || confirmText === '确定')) {
-                    log('检测到确认弹窗，点击「确定」确认放弃', 'action');
+                    log('确认弹窗，点击「确定」', 'action');
                     confirmBtn.click();
                     return true;
                 }
@@ -900,6 +895,7 @@
         return false;
     }
 
+    // --- 等待结果面板 ---
     async function waitForResultGrid(timeout = 8000) {
         const start = Date.now();
         while (Date.now() - start < timeout) {
@@ -945,6 +941,7 @@
         return false;
     }
 
+    // --- 放弃流程 ---
     async function performDiscard() {
         updateStatusUI('discarding');
         log('开始放弃流程...', 'action');
@@ -964,7 +961,7 @@
         await sleep(500);
         const confirmed = await handleDiscardConfirmDialog(3000);
         if (!confirmed) {
-            log('未检测到确认弹窗，可能已直接放弃', 'warn');
+            log('未检测到确认弹窗', 'warn');
         } else {
             log('已确认放弃', 'success');
         }
@@ -989,15 +986,16 @@
         return true;
     }
 
+    // --- 保留流程 ---
     async function performKeep(results, matches) {
         log('🎉 发现符合要求的铭文！', 'success');
         matches.forEach(m => {
-            log(`  ✓ [${m.quality}] ${m.target} +${m.value} (≥${m.required})`, 'success');
+            log(`  ✓ ${m.target} +${m.value} (要求≥${m.required})${m.quality ? ' [' + m.quality + ']' : ''}`, 'success');
         });
 
         const best = getBestResult(results);
         if (best) {
-            log(`  最佳: [${best.quality}] ${best.stat} +${best.value}`, 'success');
+            log(`  最佳: ${best.stat} +${best.value}${best.quality ? ' [' + best.quality + ']' : ''}`, 'success');
             if (!stats.bestResult || best.value > stats.bestResult.value) {
                 stats.bestResult = { quality: best.quality, stat: best.stat, value: best.value };
             }
@@ -1008,12 +1006,13 @@
 
         if (config.notifyOnComplete && Notification.permission === 'granted') {
             new Notification('灵纹洗练完成', {
-                body: `第${stats.totalPulls}次十连达成目标！${matches.map(m => `[${m.quality}]${m.target}+${m.value}`).join(', ')}`,
+                body: `第${stats.totalPulls}次十连达成！${matches.map(m => `${m.target}+${m.value}`).join(', ')}`,
                 icon: 'https://ling.muge.info/favicon.ico'
             });
         }
     }
 
+    // --- 主洗练循环 ---
     async function startPulling() {
         if (window.__inscriptionRunning) {
             log('洗练已在运行中', 'warn');
@@ -1034,7 +1033,8 @@
         updateStatusUI('running');
         startTopMonitor();
         log('=== 开始灵纹洗练 ===', 'success');
-        log(`品质: ${config.minQuality} | 模式: ${config.stopMode}`, 'info');
+        log(`目标: ${config.targetStats.map(t => `${t.stat}≥${t.minValue || 0}`).join(', ')}`, 'info');
+        log(`模式: ${config.stopMode === 'any' ? '任一满足' : (config.stopMode === 'all' ? '全部满足' : '永不停')}`, 'info');
 
         try {
             while (window.__inscriptionRunning) {
@@ -1097,10 +1097,8 @@
                     continue;
                 }
 
-                const summary = results.map(r => {
-                    const qMark = r.quality === '神纹' ? '★' : (r.quality === '宝纹' ? '◆' : (r.quality === '灵纹' ? '◇' : '·'));
-                    return `${qMark}${r.stat}+${r.value}`;
-                }).join(' ');
+                // 输出结果摘要（不区分品质颜色）
+                const summary = results.map(r => `${r.stat}+${r.value}`).join(' ');
                 log(summary, 'info');
 
                 const { met, matches, reason } = checkTargetMet(results);
@@ -1109,8 +1107,9 @@
                     await performKeep(results, matches);
                     break;
                 } else {
+                    log(`无符合 (${reason})，执行放弃`, 'warn');
                     if (matches.length > 0) {
-                        matches.forEach(m => log(`  ~ [${m.quality}] ${m.target}+${m.value}`, 'warn'));
+                        matches.forEach(m => log(`  ~ ${m.target}+${m.value} (不满足≥${m.required})`, 'warn'));
                     }
                     await performDiscard();
                 }
@@ -1127,9 +1126,9 @@
             updateStatusUI('idle');
 
             const elapsed = stats.startTime ? Math.round((Date.now() - stats.startTime) / 1000) : 0;
-            log(`=== 结束 | ${stats.totalPulls}次 | ${Math.floor(elapsed/60)}分${elapsed%60}秒 ===`, 'info');
+            log(`=== 结束 | ${stats.totalPulls}次 | 达成${stats.keptCount} | ${Math.floor(elapsed/60)}分${elapsed%60}秒 ===`, 'info');
             if (stats.bestResult) {
-                log(`最佳: [${stats.bestResult.quality}] ${stats.bestResult.stat}+${stats.bestResult.value}`, 'success');
+                log(`最佳: ${stats.bestResult.stat}+${stats.bestResult.value}`, 'success');
             }
         }
     }
@@ -1194,7 +1193,6 @@
             top: parseInt(panel.style.top) || panel.offsetTop,
             left: parseInt(panel.style.left) || panel.offsetLeft
         };
-        // 异步保存，避免频繁写入
         clearTimeout(window.__savePosTimeout);
         window.__savePosTimeout = setTimeout(() => saveConfig(config), 500);
     }
@@ -1237,7 +1235,6 @@
         panel.style.setProperty('position', 'fixed', 'important');
         panel.style.setProperty('pointer-events', 'auto', 'important');
 
-        // 恢复位置
         panel.style.top = (config.panelPosition.top || 10) + 'px';
         panel.style.left = (config.panelPosition.left || 10) + 'px';
 
@@ -1281,12 +1278,10 @@
         panel.onclick = function (e) { e.stopPropagation(); };
         document.body.appendChild(panel);
 
-        // 手机端添加紧凑模式样式
         if (isMobile) {
             panel.classList.add('mobile-compact');
         }
 
-        // 恢复最小化状态
         if (config.minimized) {
             panel.classList.add('minimized');
             panel.style.width = 'auto';
@@ -1344,13 +1339,13 @@
         }, { passive: false });
         document.addEventListener('touchend', endDrag);
 
-        // 最小化按钮 - 点击切换
+        // 最小化
         document.getElementById('inscription-minimize').addEventListener('click', (e) => {
             toggleMinimized();
             e.stopPropagation();
         });
 
-        // 双击头部切换最小化（手机端更方便）
+        // 双击头部切换
         header.addEventListener('dblclick', (e) => {
             if (e.target.id && (e.target.id.includes('status') || e.target.id.includes('minimize'))) return;
             toggleMinimized();
@@ -1398,11 +1393,11 @@
 
         ensurePanelOnTop();
         log('灵纹洗练面板已加载', 'info');
-        if (isMobile) {
-            log('手机端模式 | 双击标题栏可展开/折叠 | 拖拽可移动', 'info');
-        }
+        log('仅按属性名和数值判断，不限品质', 'info');
+        if (isMobile) log('手机端 | 双击标题栏折叠 | 拖拽移动', 'info');
     }
 
+    // --- 配置面板 ---
     let configPanelEl = null;
     function toggleConfigPanel() {
         if (configPanelEl) {
@@ -1421,21 +1416,7 @@
             </div>
 
             <div class="ic-section">
-                <div class="ic-section-label">品质要求</div>
-                <div class="ic-row">
-                    <label class="ic-label">最低保留品质</label>
-                    <select id="ic-minQuality">
-                        <option value="神纹" ${cfg.minQuality === '神纹' ? 'selected' : ''}>神纹（金色）</option>
-                        <option value="宝纹" ${cfg.minQuality === '宝纹' ? 'selected' : ''}>宝纹（蓝色）</option>
-                        <option value="灵纹" ${cfg.minQuality === '灵纹' ? 'selected' : ''}>灵纹（绿色）</option>
-                        <option value="凡纹" ${cfg.minQuality === '凡纹' ? 'selected' : ''}>凡纹（灰色）</option>
-                        <option value="全部" ${cfg.minQuality === '全部' ? 'selected' : ''}>全部品质</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="ic-section">
-                <div class="ic-section-label">目标属性</div>
+                <div class="ic-section-label">目标属性（不限品质，只看属性和数值）</div>
                 <div id="ic-target-list" class="affix-list">
                     ${cfg.targetStats.map((t, i) => `
                         <div class="affix-row" draggable="true" data-idx="${i}">
@@ -1446,7 +1427,7 @@
                                 <option value="气血" ${t.stat === '气血' ? 'selected' : ''}>气血</option>
                                 <option value="神识" ${t.stat === '神识' ? 'selected' : ''}>神识</option>
                             </select>
-                            <span style="font-size:${isMobile?'9px':'11px'};">≥</span>
+                            <span style="font-size:${isMobile?'9px':'11px'};color:var(--ip-text-muted);">≥</span>
                             <input class="affix-value" type="number" value="${t.minValue || 0}" min="0" placeholder="值">
                             <span class="affix-del" title="删除">&times;</span>
                         </div>
@@ -1458,6 +1439,7 @@
             <div class="ic-section">
                 <div class="ic-section-label">设置</div>
                 <div class="ic-row">
+                    <label class="ic-label">停止模式</label>
                     <select id="ic-stopMode" style="width:100%;">
                         <option value="any" ${cfg.stopMode === 'any' ? 'selected' : ''}>任一满足即停</option>
                         <option value="all" ${cfg.stopMode === 'all' ? 'selected' : ''}>全部满足才停</option>
@@ -1465,11 +1447,18 @@
                     </select>
                 </div>
                 <div class="ic-row">
-                    <input id="ic-maxAttempts" type="number" value="${cfg.maxAttempts}" min="0" placeholder="最大次数(0=无限)">
+                    <label class="ic-label">最大次数 <span class="ic-hint">0=无限</span></label>
+                    <input id="ic-maxAttempts" type="number" value="${cfg.maxAttempts}" min="0">
                 </div>
                 <div class="ic-row" style="display:flex;gap:4px;">
-                    <input id="ic-resultAnim" type="number" value="${cfg.resultAnimationMs}" min="500" max="5000" placeholder="动画(ms)" style="flex:1;">
-                    <input id="ic-discardDelay" type="number" value="${cfg.discardDelayMs}" min="500" max="10000" placeholder="等待(ms)" style="flex:1;">
+                    <div style="flex:1;">
+                        <label class="ic-label">动画等待(ms)</label>
+                        <input id="ic-resultAnim" type="number" value="${cfg.resultAnimationMs}" min="500" max="5000">
+                    </div>
+                    <div style="flex:1;">
+                        <label class="ic-label">放弃等待(ms)</label>
+                        <input id="ic-discardDelay" type="number" value="${cfg.discardDelayMs}" min="500" max="10000">
+                    </div>
                 </div>
             </div>
 
@@ -1503,7 +1492,6 @@
 
         function autoSave() {
             try {
-                config.minQuality = document.getElementById('ic-minQuality').value;
                 config.stopMode = document.getElementById('ic-stopMode').value;
                 config.maxAttempts = parseInt(document.getElementById('ic-maxAttempts').value) || 0;
                 config.resultAnimationMs = parseInt(document.getElementById('ic-resultAnim').value) || 1500;
@@ -1531,7 +1519,7 @@
             }
         }
 
-        ['ic-minQuality', 'ic-stopMode', 'ic-maxAttempts', 'ic-resultAnim', 'ic-discardDelay'].forEach(id => {
+        ['ic-stopMode', 'ic-maxAttempts', 'ic-resultAnim', 'ic-discardDelay'].forEach(id => {
             document.getElementById(id)?.addEventListener('change', autoSave);
         });
         ['ic-autoDialog', 'ic-notify'].forEach(id => {
@@ -1617,10 +1605,6 @@
                 startTopMonitor();
                 setTimeout(ensurePanelOnTop, 500);
                 setTimeout(ensurePanelOnTop, 2000);
-                log(`设备: ${isMobile ? '手机' : 'PC'} | 面板: ${PANEL_WIDTH}px`, 'info');
-                if (isMobile) {
-                    log('提示: 双击标题栏可折叠面板，减少遮挡', 'info');
-                }
             } else {
                 setTimeout(checkReady, 500);
             }
