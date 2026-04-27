@@ -564,7 +564,7 @@
             flex-shrink: 0;
         }
         .target-stat-select {
-            flex: 1; min-width: 0;
+            flex: 1; min-width: 55px0;
             padding: 2px 4px;
             background: var(--ip-bg-input) !important;
             color: var(--ip-text);
