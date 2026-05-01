@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name 灵界灵纹自动洗练
 // @namespace https://ling.muge.info
-// @version 1.4
-// @description 自动十连灵纹，按属性和数值筛选，自动放弃不符合结果，面板始终置顶，手机端紧凑模式，支持拖拽
+// @version 1.5
+// @description 自动十连灵纹，按属性和数值筛选，自动放弃不符合结果，面板始终置顶，手机端紧凑模式，支持拖拽（含边界限制）
 // @match https://ling.muge.info/*
 // @grant GM_getValue
 // @grant GM_setValue
@@ -564,7 +564,7 @@
             flex-shrink: 0;
         }
         .target-stat-select {
-            flex: 1; min-width: 55px0;
+            flex: 1; min-width: 55px;
             padding: 2px 4px;
             background: var(--ip-bg-input) !important;
             color: var(--ip-text);
@@ -1293,10 +1293,23 @@
         window.__inscriptionRunning = false;
         window.__inscriptionPaused = false;
 
-        // --- 拖拽功能 ---
+        // --- 拖拽功能（含边界限制）---
         let isDragging = false;
         let startX, startY, initialLeft, initialTop;
         const header = document.getElementById('inscription-header');
+
+        function clampPosition(left, top, elem) {
+            const rect = elem.getBoundingClientRect();
+            const winW = window.innerWidth;
+            const winH = window.innerHeight;
+            // 获取当前面板实际宽高（可能因最小化而变化）
+            const panelW = rect.width;
+            const panelH = rect.height;
+            // 限制 left: 0 ~ winW - panelW, top: 0 ~ winH - panelH
+            const clampedLeft = Math.min(Math.max(left, 0), winW - panelW);
+            const clampedTop = Math.min(Math.max(top, 0), winH - panelH);
+            return { left: clampedLeft, top: clampedTop };
+        }
 
         const startDrag = (clientX, clientY) => {
             isDragging = true;
@@ -1310,8 +1323,11 @@
         };
         const doDrag = (clientX, clientY) => {
             if (!isDragging) return;
-            panel.style.left = (initialLeft + clientX - startX) + 'px';
-            panel.style.top = (initialTop + clientY - startY) + 'px';
+            let newLeft = initialLeft + clientX - startX;
+            let newTop = initialTop + clientY - startY;
+            const clamped = clampPosition(newLeft, newTop, panel);
+            panel.style.left = clamped.left + 'px';
+            panel.style.top = clamped.top + 'px';
         };
         const endDrag = () => {
             if (!isDragging) return;
@@ -1394,7 +1410,7 @@
         ensurePanelOnTop();
         log('灵纹洗练面板已加载', 'info');
         log('仅按属性名和数值判断，不限品质', 'info');
-        if (isMobile) log('手机端 | 双击标题栏折叠 | 拖拽移动', 'info');
+        if (isMobile) log('手机端 | 双击标题栏折叠 | 拖拽移动（边界限制）', 'info');
     }
 
     // --- 配置面板 ---
